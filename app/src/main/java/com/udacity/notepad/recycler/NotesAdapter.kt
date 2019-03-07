@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.udacity.notepad.R
@@ -22,7 +21,7 @@ class NotesAdapter(private val context: Context) : RecyclerView.Adapter<NotesAda
         setHasStableIds(true)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         refresh()
     }
 
@@ -48,7 +47,7 @@ class NotesAdapter(private val context: Context) : RecyclerView.Adapter<NotesAda
         if (isRefreshing) return
         isRefreshing = true
         DataStore.execute {
-            val notes = DataStore.getNotes().all
+            val notes = DataStore.notes.all
             Handler(Looper.getMainLooper()).post {
                 this@NotesAdapter.notes = notes
                 notifyDataSetChanged()
